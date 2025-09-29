@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC Demo - Video Meeting</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📹 WebRTC Video Meeting</h1>
+            <p>Connect with others through secure peer-to-peer video calls</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="room-actions">
+                <div class="action-card">
+                    <h2>Create a New Meeting</h2>
+                    <p>Start a new video meeting and invite others</p>
+                    <button id="createRoomBtn" class="btn btn-primary">Create Room</button>
+                </div>
+                
+                <div class="action-card">
+                    <h2>Join a Meeting</h2>
+                    <p>Enter a room ID to join an existing meeting</p>
+                    <input type="text" id="roomIdInput" placeholder="Enter Room ID" maxlength="6">
+                    <button id="joinRoomBtn" class="btn btn-secondary">Join Room</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateRoomId() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        document.getElementById('createRoomBtn').addEventListener('click', () => {
+            const roomId = generateRoomId();
+            window.location.href = `/meeting.html?room=${roomId}`;
+        });
+
+        document.getElementById('joinRoomBtn').addEventListener('click', () => {
+            const roomId = document.getElementById('roomIdInput').value.trim().toUpperCase();
+            if (roomId) {
+                window.location.href = `/meeting.html?room=${roomId}`;
+            } else {
+                alert('Please enter a valid Room ID');
+            }
+        });
+
+        document.getElementById('roomIdInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('joinRoomBtn').click();
+            }
+        });
+    </script>
+</body>
+</html>
